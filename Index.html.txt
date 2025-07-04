@@ -1,0 +1,44 @@
+Index.html
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moja Szybka Strona</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Witaj na mojej stronie!</h1>
+    <nav>
+      <ul>
+        <li><a href="#o-mnie">O mnie</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="o-mnie">
+      <h2>O mnie</h2>
+      <p>To jest przykładowy tekst o mnie. Strona ładuje się bardzo szybko!</p>
+    </section>
+
+    <section id="kontakt">
+      <h2>Kontakt</h2>
+      <form id="contact-form">
+        <input type="text" placeholder="Twoje imię" required />
+        <input type="email" placeholder="Twój e-mail" required />
+        <textarea placeholder="Twoja wiadomość" required></textarea>
+        <button type="submit">Wyślij</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Moja Strona</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
