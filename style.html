@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameBoost - Usługi w grach</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>GameBoost</h1>
+    <nav>
+      <ul>
+        <li><a href="#uslugi">Usługi</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Profesjonalne usługi w grach online</h2>
+      <p>Boosting, coaching, przedmioty i wiele więcej!</p>
+      <a href="#uslugi" class="btn">Zobacz ofertę</a>
+    </section>
+
+    <section id="uslugi">
+      <h2>Nasze Usługi</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Boosting</h3>
+          <p>Szybko i bezpiecznie podniesiemy Twój ranking.</p>
+        </div>
+        <div class="card">
+          <h3>Coaching</h3>
+          <p>Indywidualne treningi z doświadczonymi graczami.</p>
+        </div>
+        <div class="card">
+          <h3>Przedmioty</h3>
+          <p>Sprzedaż rzadkich przedmiotów do gier.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <h2>Kontakt</h2>
+      <form id="contact-form">
+        <input type="text" placeholder="Twoje imię" required>
+        <input type="email" placeholder="Twój e-mail" required>
+        <textarea placeholder="Wiadomość" required></textarea>
+        <button type="submit">Wyślij</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 GameBoost. Wszelkie prawa zastrzeżone.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+—————-
+{
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: #111;
+  color: #fff;
+}
+
+header {
+  background: #1e1e1e;
+  padding: 20px;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #0af;
+  text-decoration: none;
+}
+
+.hero {
+  background: url('https://images.unsplash.com/photo-1603791452906-cd740f2bfc34?auto=format&fit=crop&w=1000&q=80') no-repeat center center/cover;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #0af;
+  color: #fff;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 40px 0;
+}
+
+.card {
+  background: #222;
+  padding: 20px;
+  margin: 10px;
+  flex: 1 1 300px;
+  max-width: 300px;
+  border-radius: 8px;
+}
+
+#kontakt form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+}
+
+#kontakt input,
+#kontakt textarea {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+#kontakt button {
+  background: #0af;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+footer {
+  background: #1e1e1e;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 10px 0;
+  }
+}
+————-
+document.getElementById('contact-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  alert('Dziękujemy za kontakt! Skontaktujemy się wkrótce.');
+});
