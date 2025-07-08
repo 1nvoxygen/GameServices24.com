@@ -68,3 +68,37 @@ function pobierzZamowienia() {
 
 pobierzZamowienia();
 </script>
+
+<h3>Zamów usługę:</h3>
+<select id="service">
+  <option value="Boosting">Boosting</option>
+  <option value="Coaching">Coaching</option>
+  <option value="Przedmioty">Przedmioty</option>
+</select>
+
+<select id="amount">
+  <option value="2999">Boosting - 29,99 PLN</option>
+  <option value="4999">Coaching - 49,99 PLN</option>
+  <option value="1999">Przedmioty - 19,99 PLN</option>
+</select>
+
+<button onclick="zamowUsluge()">Zamów i zapłać</button>
+
+<script>
+function zamowUsluge() {
+  const service = document.getElementById('service').value;
+  const amount = document.getElementById('amount').value;
+
+  fetch('http://localhost:4000/create-checkout-session', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    },
+    body: JSON.stringify({ service, amount })
+  })
+  .then(res => res.json())
+  .then(data => window.location.href = data.url) // Przekierowanie do Stripe
+  .catch(err => console.error("Błąd płatności", err));
+}
+</script>
