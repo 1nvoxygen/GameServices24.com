@@ -65,3 +65,13 @@ app.delete('/admin/user/delete', verifyToken, (req, res) => {
     res.send("Użytkownik usunięty.");
   });
 });
+
+// Endpoint do resetowania hasła użytkownika
+app.post('/admin/user/reset-password', verifyToken, (req, res) => {
+  const { userId, newPassword } = req.body;
+
+  if (!isAdmin(req)) {
+    return res.status(403).send("Brak uprawnień do resetowania haseł.");
+  }
+
+  const hashedPassword = bcrypt
