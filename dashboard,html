@@ -9,3 +9,62 @@ fetch('http://localhost:4000/dashboard', {
 .then(data => document.getElementById('welcome').textContent = data.message)
 .catch(() => location.href = 'login.html');
 </script>
+
+<h2>Panel klienta</h2>
+<p id="welcome"></p>
+
+<h3>Zamów usługę:</h3>
+<select id="service">
+  <option value="Boosting">Boosting</option>
+  <option value="Coaching">Coaching</option>
+  <option value="Przedmioty">Przedmioty</option>
+</select>
+<button onclick="zamowUsluge()">Zamów</button>
+
+<h3>Historia zamówień:</h3>
+<ul id="orders"></ul>
+
+<script>
+const token = localStorage.getItem('token');
+
+fetch('http://localhost:4000/dashboard', {
+  headers: { 'Authorization': 'Bearer ' + token }
+})
+.then(res => res.json())
+.then(data => document.getElementById('welcome').textContent = data.message)
+.catch(() => location.href = 'login.html');
+
+function zamowUsluge() {
+  const service = document.getElementById('service').value;
+
+  fetch('http://localhost:4000/order', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify({ service })
+  })
+  .then(res => res.text())
+  .then(alert)
+  .then(pobierzZamowienia);
+}
+
+function pobierzZamowienia() {
+  fetch('http://localhost:4000/orders', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(res => res.json())
+  .then(data => {
+    const list = document.getElementById('orders');
+    list.innerHTML = '';
+    data.forEach(order => {
+      const li = document.createElement('li');
+      li.textContent = ${order.service} — ${order.created_at};
+      list.appendChild(li);
+    });
+  });
+}
+
+pobierzZamowienia();
+</script>
