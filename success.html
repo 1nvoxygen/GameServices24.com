@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Potwierdzenie płatności</title>
+</head>
+<body>
+  <h1>Dziękujemy za dokonanie płatności!</h1>
+  <p>Twoje zamówienie zostało pomyślnie opłacone.</p>
+
+  <p>Oczekuj na realizację zamówionej usługi. Jeśli masz pytania, skontaktuj się z nami.</p>
+
+  <a href="dashboard.html">Powróć do panelu klienta</a>
+
+  <script>
+    // Pobierz parametr 'order' z URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderService = urlParams.get('order');
+
+    if (orderService) {
+      const message = Usługa ${orderService} została pomyślnie opłacona.;
+      document.body.insertAdjacentHTML('beforeend', <p>${message}</p>);
+    }
+  </script>
+</body>
+</html>
