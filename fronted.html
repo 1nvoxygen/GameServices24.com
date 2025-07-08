@@ -71,3 +71,42 @@
     .catch(err => {
       console.error("Błąd przy pobieraniu zamówień", err);
       alert("Błąd przy ładowaniu zamówień.");
+
+           <h3>Dodaj nowego użytkownika</h3>
+<form id="addUserForm">
+  <label for="username">Nazwa użytkownika:</label>
+  <input type="text" id="username" required>
+  <label for="email">Email:</label>
+  <input type="email" id="email" required>
+  <label for="password">Hasło:</label>
+  <input type="password" id="password" required>
+  <label for="role">Rola:</label>
+  <select id="role">
+    <option value="user">Użytkownik</option>
+    <option value="admin">Administrator</option>
+  </select>
+  <button type="submit">Dodaj użytkownika</button>
+</form>
+
+<script>
+  document.getElementById('addUserForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const role = document.getElementById('role').value;
+
+    fetch('http://localhost:4000/admin/user/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify({ username, email, password, role })
+    })
+    .then(response => response.text())
+    .then(text => alert(text))
+    .catch(error => alert('Błąd: ' + error));
+  });
+</script>
