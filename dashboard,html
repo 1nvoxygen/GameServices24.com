@@ -1,0 +1,11 @@
+<h2>Panel klienta</h2>
+<p id="welcome"></p>
+
+<script>
+fetch('http://localhost:4000/dashboard', {
+  headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+})
+.then(res => res.json())
+.then(data => document.getElementById('welcome').textContent = data.message)
+.catch(() => location.href = 'login.html');
+</script>
