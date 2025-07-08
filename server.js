@@ -76,3 +76,30 @@ app.get('/orders', verifyToken, (req, res) => {
 
 const stripe = require('stripe')('TWÓJ_KLUCZ_STRIPE_SECRET');
 
+app.post('/create-checkout-session', verifyToken, async (req, res) => {
+  const { service, amount } = req.body; // Kwota za usługę
+  const userId = req.user.id;
+
+  // Tworzenie sesji płatności w Stripe
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: [
+      {
+        price_data: {
+          currency: 'pln',
+          product_data: {
+            name: service
+          },
+          unit_amount: amount, // Przesyłamy kwotę w groszach
+        },
+        quantity: 1,
+      }
+    ],
+    mode: 'payment',
+    success_url: http://localhost:3000/success.html?order=${service},
+    cancel_url: 'http://localhost:3000/cancel.html',
+  });
+
+  // Zwrócenie URL do strony płatności Stripe
+  res.json({ url: session.url });
+});
