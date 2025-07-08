@@ -183,3 +183,24 @@ function sendOrderConfirmationEmail(userEmail, service) {
     }
   });
 }
+
+if (event.type === 'checkout.session.completed') {
+  const session = event.data.object;
+  const userId = session.metadata.userId;
+  const service = session.metadata.service;
+  const userEmail = session.metadata.userEmail;  // Dodajemy e-mail użytkownika do metadanych sesji Stripe
+
+  // Zaktualizuj zamówienie w bazie danych jako opłacone
+  db.run('UPDATE orders SET paid = 1 WHERE user_id = ? AND service = ?', [userId, service], (err) => {
+    if (err) console.error("Błąd aktualizacji zamówienia", err);
+  });
+
+  // Wyślij potwierdzenie e-mail
+  sendOrderConfirmationEmail(userEmail, service);
+}
+
+metadata: {
+  userId: userId,
+  service: service,
+  userEmail: userEmail,
+}
