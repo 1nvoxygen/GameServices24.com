@@ -1,86 +1,113 @@
-style.css
-
-*{
- margin: 0;
- padding: 0;
- box-sizing: border-box;
+{
+box-sizing: border-box;
+margin: 0;
+padding: 0;
 }
 
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  background-color: #f4f4f4;
-  color: #333;
-  padding: 1rem;
+  background: #111;
+  color: #fff;
 }
 
 header {
-  background: #333;
-  color: white;
-  padding: 1rem 0;
+  background: #1e1e1e;
+  padding: 20px;
   text-align: center;
 }
 
 nav ul {
   list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 0.5rem;
+  margin-top: 10px;
 }
 
-nav a {
-  color: white;
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #0af;
   text-decoration: none;
 }
 
-main {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background: white;
+.hero {
+  background: url('https://images.unsplash.com/photo-1603791452906-cd740f2bfc34?auto=format&fit=crop&w=1000&q=80') no-repeat center center/cover;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #0af;
+  color: #fff;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 40px 0;
+}
+
+.card {
+  background: #222;
+  padding: 20px;
+  margin: 10px;
+  flex: 1 1 300px;
+  max-width: 300px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-section {
-  margin-bottom: 2rem;
-}
-
-form {
+#kontakt form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
 }
 
-input, textarea {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
+#kontakt input,
+#kontakt textarea {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: none;
   border-radius: 4px;
-  font-size: 1rem;
 }
 
-button {
-  background-color: #333;
+#kontakt button {
+  background: #0af;
   color: white;
   border: none;
-  padding: 0.7rem;
-  cursor: pointer;
+  padding: 10px;
   border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #555;
+  cursor: pointer;
 }
 
 footer {
+  background: #1e1e1e;
   text-align: center;
-  margin-top: 2rem;
+  padding: 20px;
+  margin-top: 40px;
 }
-————————————————————-
-Script.js
-document.getElementById("contact-form").addEventListener("submit", function (e) {
-  e.preventDefault();
-  alert("Wiadomość została wysłana!");
-});
+
+@media (max-width: 768px) {
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 10px 0;
+  }
+}
