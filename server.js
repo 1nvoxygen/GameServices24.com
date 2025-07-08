@@ -73,3 +73,6 @@ app.get('/orders', verifyToken, (req, res) => {
     res.json(rows);
   });
 });
+
+const stripe = require('stripe')('TWÓJ_KLUCZ_STRIPE_SECRET');
+
