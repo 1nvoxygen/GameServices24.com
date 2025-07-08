@@ -103,3 +103,31 @@ app.post('/create-checkout-session', verifyToken, async (req, res) => {
   // Zwrócenie URL do strony płatności Stripe
   res.json({ url: session.url });
 });
+
+const endpointSecret = 'TWÓJ_KLUCZ_WEBHOOK_SECRET';
+
+app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+  } catch (err) {
+    console.log(Webhook error: ${err.message});
+    return res.status(400).send(Webhook error: ${err.message});
+  }
+
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
+    const userId = session.metadata.userId;
+    const service = session.metadata.service;
+
+    // Zaktualizuj zamówienie w bazie danych jako opłacone
+    db.run('UPDATE orders SET paid = 1 WHERE user_id = ? AND service = ?', [userId, service], (err) => {
+      if (err) console.error("Błąd aktualizacji zamówienia", err);
+    });
+  }
+
+  res.status(200).send('Webhook received');
+});
