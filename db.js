@@ -10,3 +10,13 @@ db.serialize(() => {
 });
 
 module.exports = db;
+
+db.serialize(() => {
+  db.run(CREATE TABLE IF NOT EXISTS orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    service TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+  ));
+});
