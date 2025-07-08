@@ -51,3 +51,25 @@ function verifyToken(req, res, next) {
 }
 
 app.listen(4000, () => console.log('API działa na http://localhost:4000'));
+
+// Dodanie nowego zamówienia
+app.post('/order', verifyToken, (req, res) => {
+  const { service } = req.body;
+  const userId = req.user.id;
+
+  if (!service) return res.status(400).send("Brak usługi");
+
+  db.run("INSERT INTO orders (user_id, service) VALUES (?, ?)", [userId, service], function (err) {
+    if (err) return res.status(500).send("Błąd podczas zapisu zamówienia");
+    res.send("Zamówienie zapisane");
+  });
+});
+
+// Historia zamówień użytkownika
+app.get('/orders', verifyToken, (req, res) => {
+  const userId = req.user.id;
+  db.all("SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC", [userId], (err, rows) => {
+    if (err) return res.status(500).send("Błąd przy pobieraniu zamówień");
+    res.json(rows);
+  });
+});
