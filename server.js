@@ -131,3 +131,26 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
 
   res.status(200).send('Webhook received');
 });
+
+const session = await stripe.checkout.sessions.create({
+  payment_method_types: ['card'],
+  line_items: [
+    {
+      price_data: {
+        currency: 'pln',
+        product_data: {
+          name: service
+        },
+        unit_amount: amount,
+      },
+      quantity: 1,
+    }
+  ],
+  mode: 'payment',
+  success_url: http://localhost:3000/success.html?order=${service},
+  cancel_url: 'http://localhost:3000/cancel.html',
+  metadata: {
+    userId: userId,
+    service: service,
+  },
+});
