@@ -1,5 +1,4 @@
-script.js
-document.getElementById("contact-form").addEventListener("submit", function (e) {
+document.getElementById('contact-form').addEventListener('submit', function (e) {
   e.preventDefault();
-  alert("Wiadomość została wysłana!");
+  alert('Dziękujemy za kontakt! Skontaktujemy się wkrótce.');
 });
