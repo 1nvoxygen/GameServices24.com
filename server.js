@@ -154,3 +154,32 @@ const session = await stripe.checkout.sessions.create({
     service: service,
   },
 });
+
+const nodemailer = require('nodemailer');
+
+// Konfiguracja transportera do wysyłania e-maili (używamy Gmaila w tym przypadku)
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'twojemail@gmail.com',  // Twój adres e-mail
+    pass: 'twojehaslo',           // Twoje hasło aplikacyjne (nie hasło do Gmaila)
+  },
+});
+
+// Funkcja do wysyłania e-maili z potwierdzeniem zamówienia
+function sendOrderConfirmationEmail(userEmail, service) {
+  const mailOptions = {
+    from: 'twojemail@gmail.com',
+    to: userEmail,
+    subject: 'Potwierdzenie zamówienia',
+    text: Dziękujemy za złożenie zamówienia na usługę: ${service}. Twoje zamówienie jest w trakcie realizacji.,
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.error('Błąd przy wysyłaniu e-maila:', err);
+    } else {
+      console.log('E-mail wysłany:', info.response);
+    }
+  });
+}
