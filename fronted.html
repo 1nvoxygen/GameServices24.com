@@ -48,3 +48,26 @@
         updateButton.onclick = function() {
           const newStatus = prompt("Wprowadź nowy status: w toku / zrealizowane", order.status);
           if (newStatus && ['w toku', 'zrealizowane'].includes(newStatus))
+
+            // Wywołujemy endpoint do zmiany statusu
+            fetch('http://localhost:4000/admin/order/update', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+              },
+              body: JSON.stringify({ orderId: order.id, status: newStatus })
+            })
+            .then(response => response.text())
+            .then(text => alert(text))
+            .catch(error => alert('Błąd: ' + error));
+          } else {
+            alert("Niepoprawny status.");
+          }
+        };
+        statusCell.appendChild(updateButton);
+      });
+    })
+    .catch(err => {
+      console.error("Błąd przy pobieraniu zamówień", err);
+      alert("Błąd przy ładowaniu zamówień.");
