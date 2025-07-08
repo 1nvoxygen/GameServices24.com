@@ -111,3 +111,48 @@ footer {
     margin: 10px 0;
   }
 }
+
+const express = require('express');
+const cors = require('cors');
+const stripe = require('stripe')('TWÓJ_KLUCZ_STRIPE_SECRET'); // testowy klucz
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// Przykładowa usługa
+const products = {
+  boosting: {
+    priceInCents: 2999,
+    name: 'Boosting konta'
+  }
+};
+
+app.post('/create-checkout-session', async (req, res) => {
+  const service = products[req.body.service];
+
+  if (!service) return res.status(400).send('Nieznana usługa');
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    mode: 'payment',
+    line_items: [
+      {
+        price_data: {
+          currency: 'pln',
+          product_data: {
+            name: service.name
+          },
+          unit_amount: service.priceInCents
+        },
+        quantity: 1
+      }
+    ],
+    success_url: 'http://localhost:3000/sukces.html',
+    cancel_url: 'http://localhost:3000/anulowano.html'
+  });
+
+  res.json({ url: session.url });
+});
+
+app.listen(4242, () => console.log('Serwer działa na porcie 4242'));
