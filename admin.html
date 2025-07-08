@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administratora</title>
+</head>
+<body>
+  <h1>Panel Administratora</h1>
+
+  <h3>Lista zamówień:</h3>
+  <table id="ordersTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Użytkownik</th>
+        <th>Usługa</th>
+        <th>Data</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Zamówienia będą dodane tutaj dynamicznie -->
+    </tbody>
+  </table>
+
+  <script>
+    // Sprawdzamy, czy użytkownik jest administratorem
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert("Nie masz uprawnień do dostępu do panelu administracyjnego.");
+      window.location.href = 'login.html';
+    }
+
+    fetch('http://localhost:4000/admin/orders', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(res => res.json())
+    .then(data => {
+      const table = document.getElementById('ordersTable').getElementsByTagName('tbody')[0];
+
+      data.forEach(order => {
+        const row = table.insertRow();
+        row.insertCell(0).textContent = order.id;
+        row.insertCell(1).textContent = order.user_id;  // Możesz dołączyć dodatkowe informacje użytkownika
+        row.insertCell(2).textContent = order.service;
+        row.insertCell(3).textContent = order.created_at;
+        row.insertCell(4).textContent = order.paid ? 'Opłacone' : 'Oczekujące';
+      });
+    })
+    .catch(err => {
+      console.error("Błąd przy pobieraniu zamówień", err);
+      alert("Błąd przy ładowaniu zamówień.");
+    });
+  </script>
+</body>
+</html>
